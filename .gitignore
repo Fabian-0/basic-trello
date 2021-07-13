@@ -1,0 +1,4 @@
+*.slqlite3
+*.pyc
+
+/trello_venv
