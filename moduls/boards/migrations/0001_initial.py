@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('name', models.CharField(max_length=100)),
-                ('descrition', models.CharField(max_length=500)),
+                ('description', models.CharField(max_length=500)),
                 ('created_at', models.DateField()),
                 ('visibility', models.CharField(choices=[('public', 'public'), ('private', 'private'), ('space_of_work', 'space_of_work')], max_length=13)),
                 ('favorite', models.ManyToManyField(related_name='favorites', to=settings.AUTH_USER_MODEL)),
