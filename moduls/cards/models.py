@@ -9,7 +9,7 @@ class Card(models.Model):
   owner = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
   name = models.CharField(max_length=150)
   list = models.ForeignKey(List, on_delete=models.CASCADE)
-  descrition = models.CharField(max_length=500)
+  description = models.CharField(max_length=500)
   members = models.ManyToManyField(User, related_name='cards')
   position = models.IntegerField(
     validators=[
@@ -18,4 +18,4 @@ class Card(models.Model):
     ]
   )
   created_at = models.DateTimeField(auto_now_add=True)
-  finalization_at = models.DateTimeField()
+  finalization_at = models.DateTimeField(null=True)

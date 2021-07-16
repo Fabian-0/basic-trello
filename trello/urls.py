@@ -26,6 +26,7 @@ router = DefaultRouter()
 from moduls.users.views import UserViewSet
 from moduls.boards.views import BoarsdModelViewSet
 from moduls.lists.views import ListModelViewSet
+from moduls.cards.views import CardViews
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -47,6 +48,7 @@ schema_view = get_schema_view(
 router.register( 'users', UserViewSet ,)
 router.register('boards', BoarsdModelViewSet)
 router.register('lists', ListModelViewSet)
+router.register('cards', CardViews)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
