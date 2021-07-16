@@ -1,4 +1,5 @@
 *.slqlite3
 *.pyc
 
+db.slqlite3
 /venv
