@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/2.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
-
+from datetime import timedelta
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'moduls.comments.apps.CommentsConfig',
     'moduls.users.apps.UsersConfig',
     'rest_framework',
-    'rest_framework_simplejwt', 
+    'rest_framework_simplejwt',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -126,6 +127,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
+}
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.BasicAuthentication',
@@ -135,4 +141,16 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 3
 }
+
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'password'
+EMAIL_PORT = '2525'
+
+CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
+
