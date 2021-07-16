@@ -1,4 +1,3 @@
-from re import T
 from rest_framework.permissions import BasePermission
 
 class ListPermissions(BasePermission):
