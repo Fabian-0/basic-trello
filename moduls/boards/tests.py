@@ -38,7 +38,7 @@ class BoardsTestCase(APITestCase):
     self.token_two = f'Bearer {token_two}'
 
     create_response = self.client.post(
-      f'{self.BASE_URL}/board/',
+      f'{self.BASE_URL}/boards/',
       data=self.BOARD_DATA_TEST,
       HTTP_AUTHORIZATION=f'Bearer {token}'
     )
@@ -51,7 +51,7 @@ class BoardsTestCase(APITestCase):
 
   def test_create_board_without_auth(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/board/',
+      f'{self.BASE_URL}/boards/',
       data=self.BOARD_DATA_TEST
     )
 
@@ -59,7 +59,7 @@ class BoardsTestCase(APITestCase):
 
   def test_create_correctly(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/board/',
+      f'{self.BASE_URL}/boards/',
       data=self.BOARD_DATA_TEST,
       HTTP_AUTHORIZATION=self.token
     )
@@ -68,7 +68,7 @@ class BoardsTestCase(APITestCase):
 
   def test_create_with_wrong_data(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/board/',
+      f'{self.BASE_URL}/boards/',
       data=self.BOARD_WRONG_DATA_TEST,
       HTTP_AUTHORIZATION=self.token
     )
@@ -79,7 +79,7 @@ class BoardsTestCase(APITestCase):
 
   def test_get_without_token(self):
     get_response = self.client.get(
-      f'{self.BASE_URL}/board/'
+      f'{self.BASE_URL}/boards/'
     )
 
     self.assertEqual(get_response.status_code, 401)
@@ -87,7 +87,7 @@ class BoardsTestCase(APITestCase):
 
   def test_get_retrive(self):
     get_response = self.client.get(
-      f'{self.BASE_URL}/board/{self.board_id}/',
+      f'{self.BASE_URL}/boards/{self.board_id}/',
       HTTP_AUTHORIZATION=self.token
     )
 
@@ -95,7 +95,7 @@ class BoardsTestCase(APITestCase):
 
   def test_get_alien_retrive(self):
     get_response = self.client.get(
-      f'{self.BASE_URL}/board/Test{self.board_id}/',
+      f'{self.BASE_URL}/boards/Test{self.board_id}/',
       HTTP_AUTHORIZATION=self.token
     )
 
@@ -109,7 +109,7 @@ class BoardsTestCase(APITestCase):
 
   def test_update_whitout_permissions(self):
     update_response = self.client.patch(
-      f'{self.BASE_URL}/board/{self.board_id}/',
+      f'{self.BASE_URL}/boards/{self.board_id}/',
       data={
         'name': 'visibility'
       },
@@ -119,7 +119,7 @@ class BoardsTestCase(APITestCase):
 
   def test_update(self):
     update_response = self.client.patch(
-      f'{self.BASE_URL}/board/{self.board_id}/',
+      f'{self.BASE_URL}/boards/{self.board_id}/',
       data={
         'name': 'visibility'
       },
@@ -130,7 +130,7 @@ class BoardsTestCase(APITestCase):
 
   def test_update_board_other_user (self):
     update_response = self.client.patch(
-      f'{self.BASE_URL}/board/{self.board_id}00/',
+      f'{self.BASE_URL}/boards/{self.board_id}00/',
       data={
         'name': 'visibility'
       },
@@ -142,17 +142,17 @@ class BoardsTestCase(APITestCase):
   # Delete tests
 
   def test_delete_without_permissions(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/board/{self.board_id}/')
+    delete_response = self.client.delete(f'{self.BASE_URL}/boards/{self.board_id}/')
 
     self.assertEqual(delete_response.status_code, 401)
 
   def test_delete(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/board/{self.board_id}/', HTTP_AUTHORIZATION=self.token)
+    delete_response = self.client.delete(f'{self.BASE_URL}/boards/{self.board_id}/', HTTP_AUTHORIZATION=self.token)
 
     self.assertEqual(delete_response.status_code, 204)
 
   def test_delete_board_other_user(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/board/{self.board_id}00/', HTTP_AUTHORIZATION=self.token)
+    delete_response = self.client.delete(f'{self.BASE_URL}/boards/{self.board_id}00/', HTTP_AUTHORIZATION=self.token)
 
     self.assertEqual(delete_response.status_code, 404)
 
@@ -162,7 +162,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_members_post_without_permissios(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'id': self.user_two.id
       }
@@ -172,7 +172,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_members_post(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'id': self.user_two.id
       },
@@ -183,7 +183,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_members_post_wrong_data(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'other': 'test'
       },
@@ -194,7 +194,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_members_post_add_wrong_permissions(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'id': self.user.id
       },
@@ -207,7 +207,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_members_delete(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'id': self.user_two.id
       },
@@ -217,7 +217,7 @@ class BoardsTestCase(APITestCase):
     self.assertEqual(add_response.status_code, 201)
 
     remove_response = self.client.delete(
-      f'{self.BASE_URL}/board/{self.board_id}/members/',
+      f'{self.BASE_URL}/boards/{self.board_id}/members/',
       data={
         'id': self.user_two.id
       },
@@ -230,7 +230,7 @@ class BoardsTestCase(APITestCase):
 
   def test_action_favorite_post(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/favorites/',
+      f'{self.BASE_URL}/boards/{self.board_id}/favorites/',
       HTTP_AUTHORIZATION=self.token
     )
 
@@ -238,14 +238,14 @@ class BoardsTestCase(APITestCase):
 
   def test_action_favorite_delete(self):
     add_response = self.client.post(
-      f'{self.BASE_URL}/board/{self.board_id}/favorites/',
+      f'{self.BASE_URL}/boards/{self.board_id}/favorites/',
       HTTP_AUTHORIZATION=self.token
     )
 
     self.assertEqual(add_response.status_code, 201)
 
     remove_response = self.client.delete(
-      f'{self.BASE_URL}/board/{self.board_id}/favorites/',
+      f'{self.BASE_URL}/boards/{self.board_id}/favorites/',
       HTTP_AUTHORIZATION=self.token
     )
 

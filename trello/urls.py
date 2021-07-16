@@ -45,8 +45,8 @@ schema_view = get_schema_view(
 )
 
 router.register( 'users', UserViewSet ,)
-router.register('board', BoarsdModelViewSet)
-router.register('list', ListModelViewSet)
+router.register('boards', BoarsdModelViewSet)
+router.register('lists', ListModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

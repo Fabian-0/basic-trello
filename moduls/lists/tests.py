@@ -32,7 +32,7 @@ class ListTestCase(APITestCase):
     
 
     create_list_response = self.client.post(
-      f'{self.BASE_URL}/list/',
+      f'{self.BASE_URL}/lists/',
       data={
         'name': 'list test',
         'board': self.board_id,
@@ -46,7 +46,7 @@ class ListTestCase(APITestCase):
      
   def test_create_list_without_credentials(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/list/',
+      f'{self.BASE_URL}/lists/',
       data={
         'name': 'list test',
         'board': self.board_id,
@@ -58,7 +58,7 @@ class ListTestCase(APITestCase):
 
   def test_create_wrong_data(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/list/',
+      f'{self.BASE_URL}/lists/',
       data={
         'name': 'list test',
         'position': -1
@@ -70,7 +70,7 @@ class ListTestCase(APITestCase):
 
   def test_create(self):
     create_response = self.client.post(
-      f'{self.BASE_URL}/list/',
+      f'{self.BASE_URL}/lists/',
       data={
         'name': 'list test',
         'board': self.board_id,
@@ -84,12 +84,12 @@ class ListTestCase(APITestCase):
   # Get test
 
   def test_get_withou_credentials(self):
-    get_response = self.client.get(f'{self.BASE_URL}/list/')
+    get_response = self.client.get(f'{self.BASE_URL}/lists/')
 
     self.assertEqual(get_response.status_code, 401)
 
   def test_get(self):
-    get_response = self.client.get(f'{self.BASE_URL}/list/', HTTP_AUTHORIZATION=self.token)
+    get_response = self.client.get(f'{self.BASE_URL}/lists/', HTTP_AUTHORIZATION=self.token)
 
     self.assertEqual(get_response.status_code, 200)
 
@@ -97,7 +97,7 @@ class ListTestCase(APITestCase):
 
   def test_update_without_credentials(self):
     create_response = self.client.put(
-      f'{self.BASE_URL}/list/',
+      f'{self.BASE_URL}/lists/',
       data={
         'name': 'list test',
         'board': self.board_id,
@@ -109,7 +109,7 @@ class ListTestCase(APITestCase):
 
   def test_update_wrong_data(self):
     create_response = self.client.patch(
-      f'{self.BASE_URL}/list/1/',
+      f'{self.BASE_URL}/lists/1/',
       data={
         'position': -1
       },
@@ -120,7 +120,7 @@ class ListTestCase(APITestCase):
 
   def test_update(self):
     create_response = self.client.patch(
-      f'{self.BASE_URL}/list/1/',
+      f'{self.BASE_URL}/lists/1/',
       data={
         'name': 'testupdate'
       },
@@ -132,17 +132,17 @@ class ListTestCase(APITestCase):
   # Delete tests
 
   def test_delete_without_credentials(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/list/1/')
+    delete_response = self.client.delete(f'{self.BASE_URL}/lists/1/')
 
     self.assertEqual(delete_response.status_code, 401)
 
   def test_delete_wrong_id(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/list/1abc/', HTTP_AUTHORIZATION=self.token)
+    delete_response = self.client.delete(f'{self.BASE_URL}/lists/1abc/', HTTP_AUTHORIZATION=self.token)
 
     self.assertEqual(delete_response.status_code, 404)
 
   def test_delete(self):
-    delete_response = self.client.delete(f'{self.BASE_URL}/list/1/', HTTP_AUTHORIZATION=self.token)
+    delete_response = self.client.delete(f'{self.BASE_URL}/lists/1/', HTTP_AUTHORIZATION=self.token)
 
     self.assertEqual(delete_response.status_code, 204)
 
@@ -150,7 +150,7 @@ class ListTestCase(APITestCase):
 
   def test_action_get_cards_without_credentials(self):
     delete_response = self.client.get(
-      f'{self.BASE_URL}/list/1/cards/', 
+      f'{self.BASE_URL}/lists/1/cards/', 
       data={
         'board': self.board_id
       }
@@ -160,7 +160,7 @@ class ListTestCase(APITestCase):
 
   def test_action_get_cards_wituout_data(self):
     delete_response = self.client.get(
-      f'{self.BASE_URL}/list/1/cards/', 
+      f'{self.BASE_URL}/lists/1/cards/', 
       HTTP_AUTHORIZATION=self.token
     )
   
@@ -169,7 +169,7 @@ class ListTestCase(APITestCase):
   
   def test_action_get_cards_wrong_data(self):
     delete_response = self.client.get(
-      f'{self.BASE_URL}/list/1/cards/', 
+      f'{self.BASE_URL}/lists/1/cards/', 
       data={
         'board': 12
       }, 
@@ -179,7 +179,7 @@ class ListTestCase(APITestCase):
 
   def test_action_get_cards(self):
     get_response = self.client.get(
-      f'{self.BASE_URL}/list/1/cards/', 
+      f'{self.BASE_URL}/lists/1/cards/', 
       data = {
         'board': self.board_id
       },
@@ -192,7 +192,7 @@ class ListTestCase(APITestCase):
   
   def test_action_order_lists(self):
     get_response = self.client.put(
-      f'{self.BASE_URL}/list/1/order/', 
+      f'{self.BASE_URL}/lists/1/order/', 
       data = {
         'board': self.board_id,
         'order': 2

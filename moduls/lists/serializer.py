@@ -21,4 +21,4 @@ class AuxSerializerCards(serializers.ModelSerializer):
 
   class Meta:
     model = Card
-    fields = ('owner', 'name', 'descrition', 'members', 'position', 'created_at', 'finalization_at' )
+    fields = ('owner', 'name', 'description', 'members', 'position', 'created_at', 'finalization_at' )
