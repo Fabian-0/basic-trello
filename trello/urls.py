@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from rest_framework.routers import DefaultRouter
 from moduls.boards.views import BoarsdModelViewSet
+from moduls.lists.views import ListModelViewSet
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -26,6 +27,7 @@ from rest_framework_simplejwt.views import (
 router = DefaultRouter()
 
 router.register('board', BoarsdModelViewSet)
+router.register('list', ListModelViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
