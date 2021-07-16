@@ -1,12 +1,5 @@
 *.slqlite3
 *.pyc
 
-<<<<<<< HEAD
 db.slqlite3
 /venv
-=======
-/venv
-
-
-
->>>>>>> d3d56b56cac13bda82807ba9e3718154c41002f9
