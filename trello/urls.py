@@ -27,6 +27,8 @@ router = DefaultRouter()
 
 from django.contrib.auth.models import User
 from moduls.users.views import UserViewSet
+from moduls.boards.views import BoarsdModelViewSet
+from moduls.lists.views import ListModelViewSet
 
 router.register( 'users', UserViewSet ,)
 router.register('board', BoarsdModelViewSet)
