@@ -7,4 +7,4 @@ class CardSerializer(ModelSerializer):
 
     class Meta:
         model = Card
-        fields = ('name', 'description', 'position', 'created_at', 'list')
+        fields = ('name', 'description', 'members','position', 'created_at', 'list')
