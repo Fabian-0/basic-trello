@@ -29,10 +29,12 @@ from django.contrib.auth.models import User
 from moduls.users.views import UserViewSet
 from moduls.boards.views import BoarsdModelViewSet
 from moduls.lists.views import ListModelViewSet
+from moduls.cards.views import CardViews
 
 router.register( 'users', UserViewSet ,)
-router.register('board', BoarsdModelViewSet)
-router.register('list', ListModelViewSet)
+router.register('boards', BoarsdModelViewSet)
+router.register('lists', ListModelViewSet)
+router.register('cards', CardViews)
 
 
 urlpatterns = [
