@@ -127,6 +127,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=1)
 }
@@ -140,14 +141,16 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 3
 }
 
 EMAIL_HOST = 'smtp.mailtrap.io'
-EMAIL_HOST_USER = 'd327775ca8aeb6'
-EMAIL_HOST_PASSWORD = 'f14c2a174e33f6'
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = 'password'
 EMAIL_PORT = '2525'
 
 CELERY_BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+
 
