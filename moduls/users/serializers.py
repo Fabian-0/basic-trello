@@ -1,4 +1,3 @@
-from django.db.models import fields
 from rest_framework.serializers import ModelSerializer
 from django.contrib.auth.models import User
 
@@ -20,7 +19,6 @@ class CreateUserSerializer(ModelSerializer):
 
         )
         user.set_password(validated_data["password"])
-        print(validated_data)
         user.save()
         return user
 
@@ -29,3 +27,10 @@ class UpdateUserSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ('username',)
+
+class GetIdUserSerializers(ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('id', 'username')
+
