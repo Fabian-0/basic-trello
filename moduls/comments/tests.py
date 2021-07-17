@@ -12,8 +12,10 @@ from moduls.cards.models import Card
 class CommentsTestCase(APITestCase):
     def setUp(self) -> None:
         self.host = 'http://127.0.0.1:8000'
-        
-        self.user = User.objects.create(password= '123',
+        user = User.objects.create_user(username='test2', password='test')
+        response = self.client.post(f'{self.host}/api/token/', data={'username': 'test2', 'password': 'test'})
+        self.token =response.data['access']
+        """ self.user = User.objects.create(password= '123',
                                         is_superuser=False,
                                         username = 'user',
                                         first_name= 'user',
@@ -21,7 +23,7 @@ class CommentsTestCase(APITestCase):
                                         is_staff= False,
                                         is_active=True,
                                         date_joined='2021-07-16T00:08:01.189958Z',
-                                        last_name='user2')
+                                        last_name='user2') """
 
         self.board = Board.objects.create(name = 'qe',
                                     description = 'we',
@@ -31,21 +33,23 @@ class CommentsTestCase(APITestCase):
         self.lists = List.objects.create(name="api trello",
                                         position=3,
                                         created_at="2021-07-16T00:08:01.189958Z",
-                                        board_id= 1)
+                                        board= self.board)
 
 
-        self.card = Card.objects.create(name="crear vistas",
-                                        descrition="crear vistas", 
+        self.card = Card.objects.create(
+                                        owner=user,
+                                        name="crear vistas",
+                                        description="crear vistas", 
                                         position=2,
-                                        created_at="2021-07-16T00:08:01.189958Z")
+                                        list=self.lists,
+                                        finalization_at="2021-07-16T00:08:01.189958Z")
         
         self.comment = Comment.objects.create(message="crear vistas",
-                                        card_id=1,
-                                        owner_id=1,
-                                        created_at="2021-07-16T00:08:01.189958Z")
+                                        card=self.card,
+                                        owner=user)
 
     def test_get_comments(self):
-        response = self.client.get(f'{self.host}/comments/')
+        response = self.client.get(f'{self.host}/comments/', HTTP_AUTHORIZATION=f'Bearer {self.token}')
         
         self.assertEqual(response.status_code, 200)
         self.assertNotEqual(len(response.data), 0)
@@ -54,10 +58,9 @@ class CommentsTestCase(APITestCase):
         data = {
                 "message": "hola", 
                 "owner": 1,
-                "created_at": "2021-07-16T00:08:01.189958Z",
                 "card": 1
                 }
-        response = self.client.post(f'{self.host}/comments/', data= data)
+        response = self.client.post(f'{self.host}/comments/', data= data, HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, 201)
         total_comments = Comment.objects.all().count()
         self.assertNotEqual(total_comments, 0)
@@ -66,13 +69,13 @@ class CommentsTestCase(APITestCase):
         data = {
             "message": "editado",
         }
-        response = self.client.patch(f'{self.host}/comments/{self.comment.id}/', data= data)
+        response = self.client.patch(f'{self.host}/comments/{self.comment.id}/', data= data, HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, 200)
         self.comment.refresh_from_db()
         self.assertEqual(self.comment.message, data['message'])
 
     def test_delete_comments(self):
-        response = self.client.delete(f'{self.host}/comments/{self.comment.id}/')
+        response = self.client.delete(f'{self.host}/comments/{self.comment.id}/', HTTP_AUTHORIZATION=f'Bearer {self.token}')
         self.assertEqual(response.status_code, 204)
         total_self_especific_comments = Comment.objects.filter(id = self.comment.id).count()
         self.assertEqual(total_self_especific_comments, 0)
