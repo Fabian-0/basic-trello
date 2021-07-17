@@ -26,7 +26,7 @@ from moduls.users.views import UserViewSet
 from moduls.boards.views import BoarsdModelViewSet
 from moduls.lists.views import ListModelViewSet
 from moduls.cards.views import CardViews
-from moduls.cards.views import CommentViews
+from moduls.comments.views import CommentViews
 
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
