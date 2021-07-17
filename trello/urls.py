@@ -49,6 +49,7 @@ router.register( 'users', UserViewSet ,)
 router.register('boards', BoarsdModelViewSet)
 router.register('lists', ListModelViewSet)
 router.register('cards', CardViews)
+router.register('comments', CommentViews)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
