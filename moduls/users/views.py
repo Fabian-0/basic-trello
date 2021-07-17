@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 
 from rest_framework.response import Response
-from moduls.users.serializers import CreateUserSerializer, UserSerializer, UpdateUserSerializer
+from moduls.users.serializers import CreateUserSerializer, GetIdUserSerializers, UserSerializer, UpdateUserSerializer
 from rest_framework.viewsets import ModelViewSet
 from moduls.users.permissions import UserPermissions
 from rest_framework.response import Response
@@ -19,6 +19,9 @@ class UserViewSet(ModelViewSet):
     pagination_class = None
 
     def get_serializer_class(self):
+
+        if self.request.method == 'GET':
+            return  GetIdUserSerializers
 
         if self.request.method == 'POST':
             return CreateUserSerializer
